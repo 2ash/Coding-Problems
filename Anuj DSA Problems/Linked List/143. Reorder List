@@ -1,0 +1,53 @@
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+class Solution {
+    private ListNode reverse(ListNode head){
+        ListNode curr = head;
+        ListNode prev = null;
+
+        while(curr != null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    public void reorderList(ListNode head) {
+        if(head.next == null){
+            return;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        ListNode prev = null;
+
+        while(fast != null && fast.next != null){
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode reversed = reverse(slow);
+        prev.next = null;
+
+        ListNode curr1 = head;
+        ListNode curr2 = reversed;
+        ListNode storeCurr1Next = null;
+        ListNode storeCurr2Next = null;
+
+        while(curr1 != null && curr2 != null){
+            storeCurr1Next = curr1.next;
+            curr1.next = curr2;
+            storeCurr2Next = curr2.next;
+            if(storeCurr1Next == null){
+                break;
+            }
+            curr2.next = storeCurr1Next;
+
+            curr1 = storeCurr1Next;
+            curr2 = storeCurr2Next;
+        }
+    }
+}
