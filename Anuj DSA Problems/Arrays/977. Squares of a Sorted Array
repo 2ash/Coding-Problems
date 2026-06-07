@@ -1,0 +1,54 @@
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int n = nums.length;
+        int positiveElementFirstIndex = -1;
+        int negativeElementLastIndex = -1;
+
+        int ans[] = new int[n];
+
+        for(int i = 0; i < n; i++){
+            if(nums[i] >= 0){
+                positiveElementFirstIndex = i;
+                break;
+            }
+            else{
+                negativeElementLastIndex = i;
+            }
+        }
+
+        int ind = 0;
+        if(negativeElementLastIndex == -1){
+            for(int i = 0; i < n; i++){
+                ans[ind++] = nums[i] * nums[i];
+            }
+        }
+        else if(positiveElementFirstIndex == -1){
+            for(int i = n - 1; i >= 0; i--){
+                ans[ind++] = nums[i] * nums[i];
+            }
+        }
+        else{
+            while(negativeElementLastIndex != -1 && positiveElementFirstIndex != n){
+                if(Math.pow(nums[negativeElementLastIndex], 2) >= 
+                Math.pow(nums[positiveElementFirstIndex], 2)){
+                    ans[ind++] = (int)Math.pow(nums[positiveElementFirstIndex++], 2); 
+                }
+                else{
+                    ans[ind++] = (int)Math.pow(nums[negativeElementLastIndex--], 2);
+                    
+                }
+            }
+
+            while(negativeElementLastIndex != -1){
+                ans[ind++] = (int)Math.pow(nums[negativeElementLastIndex--], 2);
+            }
+            while(positiveElementFirstIndex != n){
+                ans[ind++] = (int)Math.pow(nums[positiveElementFirstIndex++], 2);
+            }
+        }
+        return ans;
+    }
+}
