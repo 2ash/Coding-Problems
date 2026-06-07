@@ -1,0 +1,32 @@
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = 0;
+        ListNode curr1 = l1;
+        ListNode curr2 = l2;
+        ListNode newNode = new ListNode(-1);
+        ListNode ans = newNode;
+
+        while(curr1 != null || curr2 != null){
+            int total = carry;
+            if(curr1 != null){
+                total += curr1.val; 
+                curr1 = curr1.next;
+            }
+            if(curr2 != null){
+                total += curr2.val;
+                curr2 = curr2.next;
+            }
+            carry = total >= 10 ? 1 : 0;
+            newNode.next = new ListNode(total % 10);
+            newNode = newNode.next;
+        }
+
+        if(carry == 1){
+            newNode.next = new ListNode(1);
+        }
+        return ans.next;
+    }
+}
