@@ -1,0 +1,32 @@
+Time Complexity: O(N)
+Space Complexity: O(1)
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode ans = dummy;
+
+        ListNode curr1 = list1;
+        ListNode curr2 = list2;
+
+        while(curr1 != null && curr2 != null){
+            if(curr1.val <= curr2.val){
+                dummy.next = curr1;
+                dummy = dummy.next;
+                curr1 = curr1.next;
+            }
+            else if(curr2.val < curr1.val){
+                dummy.next = curr2;
+                dummy = dummy.next;
+                curr2 = curr2.next;
+            }
+        }
+        if(curr1 == null){
+            dummy.next = curr2;
+        }
+        if(curr2 == null){
+            dummy.next = curr1;
+        }
+        return ans.next;
+    }
+}
